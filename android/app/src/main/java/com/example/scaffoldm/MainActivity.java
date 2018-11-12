@@ -1,4 +1,4 @@
-package com.example.flutterminimal;
+package friday.flutterminimal;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
