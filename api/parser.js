@@ -7,7 +7,7 @@ function spacer(level) {
 }
 
 function parse(data, level) {
-  const skipKeys = ["widget", "arguements"];
+  const skipKeys = ["widget"];
   const className = data["widget"];
   let widget = `${className}(\n`;
 
@@ -23,7 +23,13 @@ function parse(data, level) {
       level -= 1;
     } else {
       level += 1;
-      widget += `${spacer(level)}${key}: ${value},\n`;
+      if (key === "arguments") {
+        value.forEach(argument => {
+          widget += `${spacer(level)}${argument},\n`;
+        });
+      } else {
+        widget += `${spacer(level)}${key}: ${value},\n`;
+      }
       level -= 1;
     }
   });
