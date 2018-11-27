@@ -1,0 +1,19 @@
+{
+  "widget": "MaterialApp",
+  "title": "'Flutter Minimal'",
+  "home": {
+    "widget": "Scaffold",
+    "appBar": {
+      "widget": "AppBar",
+      "title": "'Flutter Minimal'"
+    },
+    "body": {
+      "widget": "Center",
+      "child": {
+        "widget": "Text",
+        "arguments": ["'Choose a component from menu to get started'"],
+        "textAlign": "TextAlign.center"
+      }
+    }
+  }
+}
