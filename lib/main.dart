@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './routes.dart';
 import './home.dart';
@@ -10,6 +11,13 @@ class ScaffoldM extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Firestore.instance
+        .collection('trees')
+        .snapshots()
+        .listen((data) => data.documents.forEach((doc) {
+              print(doc.data);
+            }));
+
     return MaterialApp(
       title: 'Flutter Minimal',
       home: home,

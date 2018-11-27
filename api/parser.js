@@ -1,40 +1,44 @@
-const data = require("./app.json");
+// const data = require("./app.json");
 
-let level = 0;
+class Parser {
+  constructor() {
+    this.level = 0;
+  }
 
-function spacer(level) {
-  return "  ".repeat(level);
-}
+  spacer() {
+    return "  ".repeat(this.level);
+  }
 
-function parse(data, level) {
-  const skipKeys = ["widget"];
-  const className = data["widget"];
-  let widget = `${className}(\n`;
+  parse(data) {
+    const skipKeys = ["widget"];
+    const className = data["widget"];
+    let widget = `${className}(\n`;
 
-  Object.keys(data).forEach(key => {
-    if (skipKeys.includes(key)) {
-      return;
-    }
-
-    const value = data[key];
-    if (typeof value === "object" && !Array.isArray(value)) {
-      level += 1;
-      widget += `${spacer(level)}${key}: ${parse(value, level)},\n`;
-      level -= 1;
-    } else {
-      level += 1;
-      if (key === "arguments") {
-        value.forEach(argument => {
-          widget += `${spacer(level)}${argument},\n`;
-        });
-      } else {
-        widget += `${spacer(level)}${key}: ${value},\n`;
+    Object.keys(data).forEach(key => {
+      if (skipKeys.includes(key)) {
+        return;
       }
-      level -= 1;
-    }
-  });
 
-  return widget + `${spacer(level)})`;
+      const value = data[key];
+      if (typeof value === "object" && !Array.isArray(value)) {
+        this.level += 1;
+        widget += `${this.spacer()}${key}: ${this.parse(value)},\n`;
+        this.level -= 1;
+      } else {
+        this.level += 1;
+        if (key === "arguments") {
+          value.forEach(argument => {
+            widget += `${this.spacer()}${argument},\n`;
+          });
+        } else {
+          widget += `${this.spacer()}${key}: ${value},\n`;
+        }
+        this.level -= 1;
+      }
+    });
+
+    return widget + `${this.spacer()})`;
+  }
 }
 
-console.log(parse(data, level));
+// console.log(parse(data, level));
