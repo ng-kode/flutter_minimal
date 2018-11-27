@@ -12,3 +12,5 @@ build/
 android/key.properties
 
 local/
+
+api/index.html
